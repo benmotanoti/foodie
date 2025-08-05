@@ -22,21 +22,28 @@ import {
   
     useEffect(() => {
       const fetchrecipes = async () => {
-        
-        };
+        const rawdata = await AsyncStorage.getItem("customrecipes") || "[]"
+        const json = JSON.parse(rawdata)
+        setrecipes(json)
+        setLoading(false)
+      };
   
       fetchrecipes();
     }, []);
   
-    const handleAddrecipe = () => {
-
+    const handleAddrecipe = async () => {
+        navigation.navigate("RecipesFormScreen")
     };
   
     const handlerecipeClick = (recipe) => {
-
+        navigation.navigate("CustomRecipesScreen", { recipe })
     };
+
     const deleterecipe = async (index) => {
-    
+        const temp = [...recipes]
+        temp.splice(index, 1)
+        await AsyncStorage.setItem("customrecipes", JSON.stringify(temp))
+        setrecipes(temp)
     };
   
     const editrecipe = (recipe, index) => {
@@ -64,17 +71,22 @@ import {
               recipes.map((recipe, index) => (
                 <View key={index} style={styles.recipeCard} testID="recipeCard">
                   <TouchableOpacity testID="handlerecipeBtn" onPress={() => handlerecipeClick(recipe)}>
-                  
+                    <Image style={styles.recipeImage} source={{uri: recipe.image}}/>
+                    
                     <Text style={styles.recipeTitle}>{recipe.title}</Text>
                     <Text style={styles.recipeDescription} testID="recipeDescp">
-                  
+                        {recipe.description?.substr(0, 50) + "..."}
                     </Text>
                   </TouchableOpacity>
   
                   {/* Edit and Delete Buttons */}
                   <View style={styles.actionButtonsContainer} testID="editDeleteButtons">
-                    
-                
+                    <TouchableOpacity onPress={editrecipe}>
+                       <Text>Edit</Text> 
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={deleterecipe}>
+                       <Text>Delete</Text> 
+                    </TouchableOpacity>
                   </View>
                 </View>
               ))
