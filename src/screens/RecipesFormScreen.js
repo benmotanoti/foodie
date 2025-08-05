@@ -12,7 +12,24 @@ export default function RecipesFormScreen({ route, navigation }) {
   );
 
   const saverecipe = async () => {
- 
+    const newrecipe = {
+        title, image, description
+    }
+
+    const existingRecipesRaw = AsyncStorage.getItem("customrecipes") || "[]"
+    const existingRecipesJSON = JSON.parse(existingRecipesRaw)
+    if(recipeToEdit){
+        const item = existingRecipesJSON[recipeIndex]
+        existingRecipesJSON[recipeIndex] = {...item, ...newRecipe}
+    }
+    else{
+        existingRecipesJSON.push(newrecipe)
+    }
+
+    if(recipeToEdit){
+        onrecipeEdited()
+        navigation.goBack()
+    }
   };
 
   return (
