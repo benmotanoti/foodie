@@ -47,7 +47,7 @@ import {
     };
   
     const editrecipe = (recipe, index) => {
-
+        navigation.navigate("RecipesFormScreen", { recipeToEdit: recipe, recipeIndex: index})
     };
   
     return (
