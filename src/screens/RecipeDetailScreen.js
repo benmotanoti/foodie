@@ -11,6 +11,8 @@ import { toggleFavorite } from "../redux/favoritesSlice"; // Redux action
 export default function RecipeDetailScreen(props) {
   const recipe = props.route.params; // recipe passed from previous screen
 
+  console.log(recipe)
+
   const dispatch = useDispatch();
   const favoriterecipes = useSelector(
     (state) => state.favorites.favoriterecipes
