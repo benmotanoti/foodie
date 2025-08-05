@@ -81,10 +81,14 @@ import {
   
                   {/* Edit and Delete Buttons */}
                   <View style={styles.actionButtonsContainer} testID="editDeleteButtons">
-                    <TouchableOpacity onPress={editrecipe}>
+                    <TouchableOpacity onPress={() => {
+                        editrecipe(recipe, index)
+                    }}>
                        <Text>Edit</Text> 
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={deleterecipe}>
+                    <TouchableOpacity onPress={() => {
+                        deleterecipe(index)
+                    }}>
                        <Text>Delete</Text> 
                     </TouchableOpacity>
                   </View>
