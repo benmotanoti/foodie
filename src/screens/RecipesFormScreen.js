@@ -16,20 +16,22 @@ export default function RecipesFormScreen({ route, navigation }) {
         title, image, description
     }
 
-    const existingRecipesRaw = AsyncStorage.getItem("customrecipes") || "[]"
+    const existingRecipesRaw = await AsyncStorage.getItem("customrecipes") || "[]"
     const existingRecipesJSON = JSON.parse(existingRecipesRaw)
     if(recipeToEdit){
         const item = existingRecipesJSON[recipeIndex]
-        existingRecipesJSON[recipeIndex] = {...item, ...newRecipe}
+        existingRecipesJSON[recipeIndex] = {...item, ...newrecipe}
     }
     else{
         existingRecipesJSON.push(newrecipe)
     }
 
+    await AsyncStorage.setItem("customrecipes", JSON.stringify(existingRecipesJSON))
+
     if(recipeToEdit){
         onrecipeEdited()
-        navigation.goBack()
     }
+    navigation.goBack()
   };
 
   return (
